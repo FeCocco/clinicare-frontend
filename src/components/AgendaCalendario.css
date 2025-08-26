@@ -1,19 +1,96 @@
-:root {
-    --fc-small-font-size: .85em;
-    --fc-neutral-text-color: #808080;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-    --fc-button-text-color: var(--light-gray-text);
-    --fc-button-bg-color: var(--purple-main);
-    --fc-button-border-color: var(--purple-main);
-    --fc-button-hover-bg-color: var(--dark-blue-text);
-    --fc-button-active-bg-color: var(--dark-blue-text);
+.agenda-container {
+    flex-grow: 1;
+    min-height: 500px;
+}
 
-    --fc-event-text-color: var(--white);
+.rbc-calendar {
+    font-family: 'Poppins', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: var(--white);
+    border: 1px solid var(--light-gray-bg);
+    color: #495057;
+}
 
-    --fc-non-business-color: rgba(215, 215, 215, 0.3);
-    --fc-bg-event-color: rgb(143, 223, 130);
-    --fc-bg-event-opacity: 0.3;
-    --fc-highlight-color: rgba(188, 232, 241, 0.3);
-    --fc-today-bg-color: rgba(255, 220, 40, 0.15);
-    --fc-now-indicator-color: red;
+.rbc-toolbar {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.rbc-toolbar .rbc-toolbar-label {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--dark-blue-text);
+}
+
+.rbc-btn-group button {
+    background-color: #f8f9fa;
+    color: var(--purple-main);
+    border: 1px solid var(--purple-main);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.rbc-btn-group button:hover,
+.rbc-btn-group button:focus {
+    background-color: var(--purple-main);
+    color: white;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+.rbc-btn-group button.rbc-active {
+    background-color: var(--purple-main);
+    color: white;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.rbc-event {
+    background-color: var(--purple-main);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 0.85em;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.rbc-event:hover {
+    opacity: 1;
+}
+
+.rbc-day-bg.rbc-today {
+    background-color: #eaf4ff;
+}
+
+.rbc-header {
+    padding: 10px 0;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.rbc-month-row {
+    min-height: 120px;
+}
+
+.rbc-show-more {
+    color: var(--purple-main);
+    font-weight: 500;
+}
+
+.agenda-header {
+    text-align: center;
+    color: var(--dark-blue-text);
+    margin-bottom: 1rem;
+    font-weight: 500;
 }

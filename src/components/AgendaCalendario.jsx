@@ -1,71 +1,101 @@
-import { useState, useEffect } from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid'; // visualizacao de mes
-import timeGridPlugin from '@fullcalendar/timegrid'; // visualizacao de semana/dia
-import interactionPlugin from '@fullcalendar/interaction'; // para interações como clique
+import React, { useState, useEffect, useCallback } from 'react';
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import startOfWeek from 'date-fns/startOfWeek';
+import getDay from 'date-fns/getDay';
+import ptBR from 'date-fns/locale/pt-BR';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './AgendaCalendario.css'
+import { getAgendamentos, criarAgendamento } from '/src/service/api.js';
 
-function AgendaCalendario() {
-    // Estado para armazenar os eventos
+const locales = { 'pt-BR': ptBR };
+const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales });
+const messages = { allDay: 'Dia Inteiro', previous: '<', next: '>', today: 'Hoje', month: 'Mês', week: 'Semana', day: 'Dia', agenda: 'Agenda', date: 'Data', time: 'Hora', event: 'Evento' };
+
+const formatarDataParaAPI = (data) => {
+    const pad = (num) => num.toString().padStart(2, '0');
+    const ano = data.getFullYear();
+    const mes = pad(data.getMonth() + 1);
+    const dia = pad(data.getDate());
+    const hora = pad(data.getHours());
+    const minuto = pad(data.getMinutes());
+    const segundo = pad(data.getSeconds());
+    return `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}`;
+};
+
+function AgendaCalendario({ profissional }) {
     const [eventos, setEventos] = useState([]);
+    const [dataNavegacao, setDataNavegacao] = useState(new Date());
+    const [view, setView] = useState('week');
 
-    //buscar os dados quando o componente carregar
+    const fetchAgendamentos = useCallback(async () => {
+        if (!profissional?.id) return;
+        const ano = dataNavegacao.getFullYear();
+        const mes = dataNavegacao.getMonth() + 1;
+        try {
+            const { data } = await getAgendamentos(profissional.id, ano, mes);
+            const agendamentosFormatados = data.map(ag => ({
+                title: `Cliente: ${ag.nomeCliente}`,
+                start: new Date(ag.dataHoraInicio),
+                end: new Date(ag.dataHoraFim),
+                resource: ag
+            }));
+            setEventos(agendamentosFormatados);
+        } catch (error) {
+            console.error("Falha ao buscar agendamentos", error);
+            setEventos([]);
+        }
+    }, [profissional?.id, dataNavegacao]);
+
     useEffect(() => {
-        // ---SIMULACAO DE BUSCA NO BACKEND ---
+        fetchAgendamentos();
+    }, [fetchAgendamentos]);
 
-        const agendamentosDoBackend = [
-            {
-                id: '1',
-                title: 'Consulta - João Silva (Dr. Ana)',
-                start: '2025-08-19T10:30:00',
-                end: '2025-08-19T11:30:00'
-            },
-            {
-                id: '2',
-                title: 'Limpeza - Maria Oliveira (Dr. Carlos)',
-                start: '2025-08-20T14:00:00',
-                end: '2025-08-20T15:00:00',
-                color: '#28a745'
+    const handleSelectSlot = async ({ start, end }) => {
+        const nomeCliente = window.prompt('Nome do Cliente:');
+        if (nomeCliente) {
+            const novoAgendamento = {
+                profissional: { id: profissional.id },
+                nomeCliente,
+                dataHoraInicio: formatarDataParaAPI(start),
+                dataHoraFim: formatarDataParaAPI(end),
+            };
+            try {
+                await criarAgendamento(novoAgendamento);
+                fetchAgendamentos();
+            } catch (error) {
+                // Melhorando a mensagem de erro
+                const errorMsg = error.response?.data || 'Erro de rede. Verifique o console do backend.';
+                console.error('Erro ao criar agendamento:', errorMsg);
+                alert(`Não foi possível realizar o agendamento: ${errorMsg}`);
             }
-        ];
+        }
+    };
 
-        setEventos(agendamentosDoBackend);
-    }, []);
-
-    //const handleEventClick = (clickInfo) => {
-        // Exibe um alerta com informações do evento ao ser clicado
-        //alert(`Agendamento: ${clickInfo.event.title}\nInício: ${clickInfo.event.start.toLocaleString()}`);
-    //};
+    const handleNavigate = (newDate) => { setDataNavegacao(newDate); };
+    const handleViewChange = (newView) => { setView(newView); };
 
     return (
-        <div>
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="timeGridWeek"
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }}
+        <div className="agenda-container">
+            <h3 className="agenda-header">Agenda de {profissional.nome}</h3>
+            <Calendar
+                localizer={localizer}
                 events={eventos}
-                //eventClick={}
-                editable={true}
-                selectable={true}
-                allDaySlot={false}
-                locale='pt-br'
-                slotMinTime="07:00:00"
-                slotMaxTime="19:00:00"
-                buttonText={{
-                    today: 'Hoje',
-                    month: 'Mês',
-                    week: 'Semana',
-                    day: 'Dia'
-                }}
-                businessHours={{
-                    daysOfWeek: [ 1, 2, 3, 4, 5],
-                    startTime: '08:00',
-                    endTime: '18:00'
-                }}
+                startAccessor="start"
+                endAccessor="end"
+                style={{ margin: '20px 0' }}
+                messages={messages}
+                culture='pt-BR'
+                selectable
+                onSelectSlot={handleSelectSlot}
+                onNavigate={handleNavigate}
+                date={dataNavegacao}
+                view={view}
+                onView={handleViewChange}
+                views={['month', 'week', 'day']}
+                min={new Date(0, 0, 0, 8, 0, 0)}
+                max={new Date(0, 0, 0, 19, 0, 0)}
             />
         </div>
     );
