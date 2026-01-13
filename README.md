@@ -36,7 +36,7 @@ This is a **frontend-only** project. For the Login and Registration system to fu
 
 The API is responsible for managing users, validating credentials, and storing data.
 
-* **Link to the Backend Repository:** [**gestao-clinica-api**](https://github.com/FeCocco/gestao-clinica-api)
+* **Link to the Backend Repository:** [**gestao-clinica-api**](https://fecocco.github.io/clinicare-frontend/)
 
 Please follow the instructions in the backend's `README.md` to clone, set up the database, and start the server (usually on `http://localhost:8080`).
 
