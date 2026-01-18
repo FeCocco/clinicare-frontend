@@ -21,27 +21,34 @@
     flex: 1;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 16px;
-    padding: 10px 0 10px 0;
+    padding: 0 0 10px 0; /* Padding superior zerado para a imagem encostar no topo redondo */
+    overflow: hidden;    /* Essencial para que a imagem respeite as bordas redondas do card */
+    background-color: #fff; /* Opcional: garante fundo branco atrás da transparência */
+}
+
+.foto-especialista {
+    width: 50%;
+    height: auto;
+    display: block;
+
+    margin-top: 1rem;
+
+    border-radius: 48px 48px 0 0;
+
+    -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
 }
 
 .especialistas_card:hover{
     outline: var(--purple-main) 1px solid;
 }
 
-.especialistas_card svg{
-    border: 1px solid red;
-}
-
 @media (max-width: 954px) {
     .especialistas_wrap{
         flex-direction: column;
         flex-grow: 0;
-
     }
     .especialistas_card:hover{
         outline: none;
     }
 }
-
-
-
