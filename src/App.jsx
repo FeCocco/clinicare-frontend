@@ -1,12 +1,12 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll'
-import Header from "./components/Header";
-import BotaoRoxo from "./components/BotaoRoxo/BotaoRoxo.jsx";
-import Hero from "./components/Hero";
-import Servicos from "./components/Servicos";
-import Especialistas from "./components/Especialistas.jsx";
-import Contato from "./components/Contato.jsx";
-import Footer from "./components/Footer.jsx";
+import Header from "./components/sections/Header/Header.jsx";
+import BotaoRoxo from "./components/ui/BotaoRoxo/BotaoRoxo.jsx";
+import Hero from "./components/sections/Hero/Hero.jsx";
+import Servicos from "./components/sections/Servicos/Servicos.jsx";
+import Especialistas from "./components/sections/Especialistas/Especialistas.jsx";
+import Contato from "./components/sections/Contato/Contato.jsx";
+import Footer from "./components/sections/Footer/Footer.jsx";
 import Login from "./pages/Login.jsx";
 
 function LayoutPrincipal() {

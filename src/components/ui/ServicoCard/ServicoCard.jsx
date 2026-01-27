@@ -1,5 +1,3 @@
-import OrtodontiaPhoto from "../../assets/icons/ortodontia.jpg";
-
 function ServicoCard (props){
     return (
         <div className="servicos_card">

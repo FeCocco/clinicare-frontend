@@ -3,9 +3,9 @@ import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import './Hero.css'
-import heroImage1 from '../assets/hero1.jpg';
-import heroImage2 from '../assets/hero2.jpg';
-import BotaoRoxo from "./BotaoRoxo/BotaoRoxo.jsx";
+import heroImage1 from '../../../assets/hero1.jpg';
+import heroImage2 from '../../../assets/hero2.jpg';
+import BotaoRoxo from "../../ui/BotaoRoxo/BotaoRoxo.jsx";
 
 function Hero(){
 

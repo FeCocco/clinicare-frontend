@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Header.css';
-import './HeaderEffect.css';
-import logo from '../assets/mini-logo.png';
+import '../../ui/HeaderEffect.css';
+import logo from '../../../assets/mini-logo.png';
 
 function Header({ children, mobileContent }) {
     const [scrolled, setScrolled] = useState(false);

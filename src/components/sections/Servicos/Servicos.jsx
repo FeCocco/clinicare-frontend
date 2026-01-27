@@ -1,10 +1,10 @@
 import './Servicos.css'
-import ServicoCard from './ServicoCard/ServicoCard.jsx'
-import ImplantePhoto from '../assets/icons/Implante-Dentario.jpg'
-import OrtodontiaPhoto from '../assets/icons/ortodontia.jpg'
-import ClareamentoPhoto from '../assets/icons/clareamento.jpg'
-import LimpezaPhoto from '../assets/icons/limpeza.jpg'
-import EndodontiaPhoto from '../assets/icons/endodontia.webp'
+import ServicoCard from '../../ui/ServicoCard/ServicoCard.jsx'
+import ImplantePhoto from '../../../assets/icons/Implante-Dentario.jpg'
+import OrtodontiaPhoto from '../../../assets/icons/ortodontia.jpg'
+import ClareamentoPhoto from '../../../assets/icons/clareamento.jpg'
+import LimpezaPhoto from '../../../assets/icons/limpeza.jpg'
+import EndodontiaPhoto from '../../../assets/icons/endodontia.webp'
 
 function Servicos() {
     return (

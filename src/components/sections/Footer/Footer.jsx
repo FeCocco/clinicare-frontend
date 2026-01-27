@@ -1,6 +1,6 @@
 import { Link } from 'react-scroll';
 import './Footer.css';
-import logo from '../assets/logo.png';
+import logo from '../../../assets/logo.png';
 
 function Footer() {
     return (
@@ -34,7 +34,7 @@ function Footer() {
             </div>
 
             <div className="footer-info">
-                <p>© 2025 CliniCare Odontologia. Todos os direitos reservados.</p>
+                <p>&copy; {new Date().getFullYear()} CliniCare Odontologia. Todos os direitos reservados.</p>
                 <p>Responsável Técnico: Dra. Bruna Giacomini Cocco - CRO/SP: 130.170</p>
             </div>
         </footer>

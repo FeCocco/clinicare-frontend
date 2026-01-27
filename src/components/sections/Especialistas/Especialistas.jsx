@@ -1,7 +1,7 @@
 import './Especialistas.css'
-import EspecialistasCard from "./EspecialistasCard/EspecialistasCard.jsx";
+import EspecialistasCard from "../../ui/EspecialistasCard/EspecialistasCard.jsx";
 
-import FotoDraVanessa from "../assets/DraVanessa.png";
+import FotoDraVanessa from "../../../assets/DraVanessa.png";
 
 function Especialistas() {
     return (
